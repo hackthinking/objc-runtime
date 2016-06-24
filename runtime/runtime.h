@@ -36,39 +36,45 @@
 #endif
 
 
+#pragma mark - 类型
 /* Types */
 
 #if !OBJC_TYPES_DEFINED
 
 /// An opaque type that represents a method in a class definition.
+/// 不透明类型，表示类定义中的一个方法
 typedef struct objc_method *Method;
 
 /// An opaque type that represents an instance variable.
+/// 不透明类型，表示一个实例变量
 typedef struct objc_ivar *Ivar;
 
 /// An opaque type that represents a category.
+/// 不透明类型，表示一个分类
 typedef struct objc_category *Category;
 
 /// An opaque type that represents an Objective-C declared property.
+/// 不透明类型，表示一个 OC 声明的属性
 typedef struct objc_property *objc_property_t;
 
 struct objc_class {
     Class isa  OBJC_ISA_AVAILABILITY;
 
 #if !__OBJC2__
-    Class super_class                                        OBJC2_UNAVAILABLE;
-    const char *name                                         OBJC2_UNAVAILABLE;
-    long version                                             OBJC2_UNAVAILABLE;
-    long info                                                OBJC2_UNAVAILABLE;
-    long instance_size                                       OBJC2_UNAVAILABLE;
-    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
-    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
-    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
-    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+    Class super_class                                        OBJC2_UNAVAILABLE; // 父类
+    const char *name                                         OBJC2_UNAVAILABLE; // 名称
+    long version                                             OBJC2_UNAVAILABLE; // 版本
+    long info                                                OBJC2_UNAVAILABLE; // 信息
+    long instance_size                                       OBJC2_UNAVAILABLE; // 实例大小
+    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE; // 对象变量列表
+    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE; // 对象方法列表
+    struct objc_cache *cache                                 OBJC2_UNAVAILABLE; // 对象缓存
+    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE; // 对象协议列表
 #endif
 
 } OBJC2_UNAVAILABLE;
 /* Use `Class` instead of `struct objc_class *` */
+/* 使用 `Class` 替代 `struct objc_class *` */
 
 #endif
 
@@ -79,29 +85,37 @@ typedef struct objc_object Protocol;
 #endif
 
 /// Defines a method
+/// 定义一个方法
 struct objc_method_description {
-	SEL name;               /**< The name of the method */
-	char *types;            /**< The types of the method arguments */
+    SEL name;               /**< The name of the method <br />方法名 */
+    char *types;            /**< The types of the method arguments <br />方法类型 */
 };
 
 /// Defines a property attribute
+/// 定义一个 property 的属性
 typedef struct {
-    const char *name;           /**< The name of the attribute */
-    const char *value;          /**< The value of the attribute (usually empty) */
+    const char *name;           /**< The name of the attribute <br />属性名称 */
+    const char *value;          /**< The value of the attribute (usually empty) <br />属性值(通常为空) */
 } objc_property_attribute_t;
 
 
+#pragma mark - 函数
 /* Functions */
 
+#pragma mark - 操作实例的函数
 /* Working with Instances */
 
 /** 
  * Returns a copy of a given object.
- * 
+ * <br />返回给定对象的副本
+ *
  * @param obj An Objective-C object.
+ *          <br />一个 OC 对象
  * @param size The size of the object \e obj.
- * 
+ *          <br />\e obj 对象的大小
+ *
  * @return A copy of \e obj.
+ *          <br />\e obj 对象的副本
  */
 OBJC_EXPORT id object_copy(id obj, size_t size)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
@@ -109,9 +123,12 @@ OBJC_EXPORT id object_copy(id obj, size_t size)
 
 /** 
  * Frees the memory occupied by a given object.
- * 
+ * <br />释放给定对象的内存
+ * @note 本函数只会释放对象的内存空间，释放后对象的指针地址不会变化
+ *
  * @param obj An Objective-C object.
- * 
+ *          <br />一个 OC 对象
+ *
  * @return nil
  */
 OBJC_EXPORT id object_dispose(id obj)
@@ -120,33 +137,43 @@ OBJC_EXPORT id object_dispose(id obj)
 
 /** 
  * Returns the class of an object.
- * 
+ * <br />返回对象的类
+ *
  * @param obj The object you want to inspect.
- * 
- * @return The class object of which \e object is an instance, 
+ *          <br />要检测的对象
+ *
+ * @return The class object of which \e object is an instance,
  *  or \c Nil if \e object is \c nil.
+ *          <br />\e object 实例的 class 对象，如果 \e object 是 \c nil 则返回 \c Nil
  */
 OBJC_EXPORT Class object_getClass(id obj) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
-/** 
+/**
  * Sets the class of an object.
- * 
+ * <br />设置对象的类
+ *
  * @param obj The object to modify.
+ *          <br />要修改的类
  * @param cls A class object.
- * 
+ *          <br />一个 class 对象
+ *
  * @return The previous value of \e object's class, or \c Nil if \e object is \c nil.
+ *          <br />\e object 修改前的 class，如果 \e object 是 \c nil 则返回 \c Nil
  */
 OBJC_EXPORT Class object_setClass(id obj, Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
-/** 
+/**
  * Returns whether an object is a class object.
- * 
+ * <br />判断对象是否是一个 class 对象
+ *
  * @param obj An Objective-C object.
- * 
+ *          <br />一个 OC 对象
+ *
  * @return true if the object is a class or metaclass, false otherwise.
+ *          <br />如果对象是一个 class 或者 mataclass 返回 true，否则返回 false
  */
 OBJC_EXPORT BOOL object_isClass(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_10, __IPHONE_8_0);
@@ -154,10 +181,13 @@ OBJC_EXPORT BOOL object_isClass(id obj)
 
 /** 
  * Returns the class name of a given object.
- * 
+ * <br />返回给定对象的类名
+ *
  * @param obj An Objective-C object.
- * 
+ *          <br />一个 OC 对象
+ *
  * @return The name of the class of which \e obj is an instance.
+ *          <br />\e obj 实例对象的类名
  */
 OBJC_EXPORT const char *object_getClassName(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
@@ -240,23 +270,31 @@ OBJC_EXPORT Ivar object_getInstanceVariable(id obj, const char *name, void **out
     OBJC_ARC_UNAVAILABLE;
 
 
+#pragma mark - 获取类定义函数
 /* Obtaining Class Definitions */
 
-/** 
+/**
  * Returns the class definition of a specified class.
- * 
+ * <br />返回指定类的类定义
+ *
  * @param name The name of the class to look up.
- * 
+ *          <br />要查询的类名
+ *
  * @return The Class object for the named class, or \c nil
  *  if the class is not registered with the Objective-C runtime.
- * 
+ *          <br />指定名称的 Class 对象，如果该类没有被 OC 运行时注册，返回 \c nil
+ *
  * @note \c objc_getClass is different from \c objc_lookUpClass in that if the class
  *  is not registered, \c objc_getClass calls the class handler callback and then checks
- *  a second time to see whether the class is registered. \c objc_lookUpClass does 
+ *  a second time to see whether the class is registered. \c objc_lookUpClass does
  *  not call the class handler callback.
- * 
+ *          <br />\c objc_getClass 与 \c objc_lookUpClass 函数的区别在于判断类是否注册
+ *          \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
+ *          \c objc_lookUpClass 函数不调用 class 的句柄回调方法
+ *
  * @warning Earlier implementations of this function (prior to OS X v10.0)
  *  terminate the program if the class does not exist.
+ *          <br />在 OS X 10.0以前版本执行此函数，如果类不存在会终止程序
  */
 OBJC_EXPORT Class objc_getClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
@@ -341,6 +379,7 @@ OBJC_EXPORT Class *objc_copyClassList(unsigned int *outCount)
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_3_1);
 
 
+#pragma mark - 操作类的函数
 /* Working with Classes */
 
 /** 
@@ -772,6 +811,7 @@ OBJC_EXPORT Class objc_getFutureClass(const char *name)
      OBJC_ARC_UNAVAILABLE;
 
 
+#pragma mark - 类的实例化
 /* Instantiating Classes */
 
 /** 
@@ -823,6 +863,7 @@ OBJC_EXPORT void *objc_destructInstance(id obj)
     OBJC_ARC_UNAVAILABLE;
 
 
+#pragma mark - 添加类
 /* Adding Classes */
 
 /** 
@@ -874,6 +915,7 @@ OBJC_EXPORT void objc_disposeClassPair(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
+#pragma mark - 操作方法的函数
 /* Working with Methods */
 
 /** 
@@ -1000,6 +1042,7 @@ OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
+#pragma mark - 操作实例变量的函数
 /* Working with Instance Variables */
 
 /** 
@@ -1038,6 +1081,7 @@ OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
+#pragma mark - 操作属性的函数
 /* Working with Properties */
 
 /** 
@@ -1086,6 +1130,7 @@ OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const ch
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
+#pragma mark - 操作协议的函数
 /* Working with Protocols */
 
 /** 
@@ -1292,6 +1337,7 @@ OBJC_EXPORT void protocol_addProperty(Protocol *proto, const char *name, const o
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 
+#pragma mark - 操作库的函数
 /* Working with Libraries */
 
 /** 
@@ -1328,6 +1374,7 @@ OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image,
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
+#pragma mark - 操作 Selector 的函数
 /* Working with Selectors */
 
 /** 
@@ -1384,6 +1431,7 @@ OBJC_EXPORT BOOL sel_isEqual(SEL lhs, SEL rhs)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 
+#pragma mark - Objective-C 语言特性的函数
 /* Objective-C Language Features */
 
 /** 
@@ -1482,61 +1530,87 @@ OBJC_EXPORT id objc_storeWeak(id *location, id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_5_0);
 
 
+#pragma mark - 关联引用
 /* Associative References */
 
-/**
+/** 
  * Policies related to associative references.
+ * 有关关联引用的策略
  * These are options to objc_setAssociatedObject()
+ * 以下是 objc_setAssociatedObject() 函数可以设置的选项
  */
-typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) {
-    OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object. */
-    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**< Specifies a strong reference to the associated object. 
-                                            *   The association is not made atomically. */
-    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**< Specifies that the associated object is copied. 
-                                            *   The association is not made atomically. */
+enum {
+    OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object.
+                                            *   <br />指定一个弱引用到被关联的对象 */
+    OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**< Specifies a strong reference to the associated object.
+                                            *   The association is not made atomically.
+                                            *   <br />指定一个强引用到被关联的对象，该关联不是原子性的 */
+    OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**< Specifies that the associated object is copied.
+                                            *   The association is not made atomically.
+                                            *   <br />指定被关联的对象是拷贝的，该关联不是原子性的 */
     OBJC_ASSOCIATION_RETAIN = 01401,       /**< Specifies a strong reference to the associated object.
-                                            *   The association is made atomically. */
+                                            *   The association is made atomically.
+                                            *   <br />指定一个强引用到被关联的对象，该关联是原子性的 */
     OBJC_ASSOCIATION_COPY = 01403          /**< Specifies that the associated object is copied.
-                                            *   The association is made atomically. */
+                                            *   The association is made atomically.
+                                            *   <br />指定被关联的对象是拷贝的，该关联是原子性的 */
 };
+
+/// Type to specify the behavior of an association.
+/// 指定关联行为的类型
+typedef uintptr_t objc_AssociationPolicy;
 
 /** 
  * Sets an associated value for a given object using a given key and association policy.
+ * <br />使用给定的键及关联策略，为对象设置值
  * 
  * @param object The source object for the association.
+ *          <br />源对象
  * @param key The key for the association.
+ *          <br />关联的键
  * @param value The value to associate with the key key for object. Pass nil to clear an existing association.
+ *          <br />要设置的值，传人 nil 将清除现有关联
  * @param policy The policy for the association. For possible values, see “Associative Object Behaviors.”
+ *          <br />关联策略，请参阅"关联对象行为"
  * 
  * @see objc_setAssociatedObject
  * @see objc_removeAssociatedObjects
  */
 OBJC_EXPORT void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
-    __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
+__OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 /** 
  * Returns the value associated with a given object for a given key.
+ * <br />返回对象给定键关联的值
  * 
  * @param object The source object for the association.
+ *          <br />源对象
  * @param key The key for the association.
+ *          <br />关联的键
  * 
  * @return The value associated with the key \e key for \e object.
+ *          <br />与 \e object 的 \e key 键关联的值
  * 
  * @see objc_setAssociatedObject
  */
 OBJC_EXPORT id objc_getAssociatedObject(id object, const void *key)
-    __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
+__OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 /** 
  * Removes all associations for a given object.
+ * <br />删除对象的所有关联
  * 
  * @param object An object that maintains associated objects.
+ *          <br />维护关联对象的源对象
  * 
- * @note The main purpose of this function is to make it easy to return an object 
+ * @note The main purpose of this function is to make it easy to return an object
  *  to a "pristine state”. You should not use this function for general removal of
  *  associations from objects, since it also removes associations that other clients
- *  may have added to the object. Typically you should use \c objc_setAssociatedObject 
+ *  may have added to the object. Typically you should use \c objc_setAssociatedObject
  *  with a nil value to clear an association.
+ * @note 本函数的主要目的是直接返回一个对象的"原始版本"。通常，不应该使用此函数从对象中删除关联，
+ *  因为会同时删除掉其他对象中已经引用的关联属性。通常情况下，应该使用 objc_setAssociatedObject
+ *  函数，并传入一个 nil 值清除一个关联
  * 
  * @see objc_setAssociatedObject
  * @see objc_getAssociatedObject
@@ -1577,6 +1651,7 @@ OBJC_EXPORT void objc_removeAssociatedObjects(id object)
 #define _C_CONST    'r'
 
 
+#pragma mark - 废弃的类型
 /* Obsolete types */
 
 #if !__OBJC2__
@@ -1724,6 +1799,7 @@ struct objc_method_list;
 #endif
 
 
+#pragma mark - 废弃的函数
 /* Obsolete functions */
 
 OBJC_EXPORT IMP class_lookupMethod(Class cls, SEL sel) 

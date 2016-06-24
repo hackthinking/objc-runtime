@@ -34,9 +34,11 @@
 #ifndef OBJC_SUPER
 #define OBJC_SUPER
 
-/// Specifies the superclass of an instance. 
+/// Specifies the superclass of an instance.
+/// 指定实例的父类
 struct objc_super {
     /// Specifies an instance of a class.
+    /// 指定一个类的实例
     __unsafe_unretained id receiver;
 
     /// Specifies the particular superclass of the instance to message. 
@@ -54,11 +56,33 @@ struct objc_super {
 /* Basic Messaging Primitives
  *
  * On some architectures, use objc_msgSend_stret for some struct return types.
+ * <br />在某些体系架构，使用 objc_msgSend_stret 作为 struct 返回类型
  * On some architectures, use objc_msgSend_fpret for some float return types.
+ * <br />在某些体系架构，使用 objc_msgSend_fpret 作为 struct 返回类型
  * On some architectures, use objc_msgSend_fp2ret for some float return types.
+ * <br />在某些体系架构，使用 objc_msgSend_fp2ret 作为 struct 返回类型
  *
- * These functions must be cast to an appropriate function pointer type 
- * before being called. 
+ * These functions must be cast to an appropriate function pointer type
+ * before being called.
+ * <br />这些函数在被调用之前，必须强制转换为合适的函数指针
+ *
+ * －调用方法
+ *
+ * @code
+ * ((id(*)(id, SEL))objc_msgSend)(self, aSelector);
+ * @endcode
+ *
+ * －调用方法，并传递一个参数
+ *
+ * @code
+ * ((id(*)(id, SEL, id))objc_msgSend)(self, aSelector, anObject);
+ * @endcode
+ *
+ * －调用方法，并传递两个参数
+ *
+ * @code
+ * ((id(*)(id, SEL, id, id))objc_msgSend)(self, aSelector, obj1, obj2);
+ * @endcode
  */
 #if !OBJC_OLD_DISPATCH_PROTOTYPES
 OBJC_EXPORT void objc_msgSend(void /* id self, SEL op, ... */ )
