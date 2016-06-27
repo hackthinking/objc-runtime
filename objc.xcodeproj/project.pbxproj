@@ -11,6 +11,8 @@
 		024F2F691D2105BB0036EB21 /* NSObjCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F671D2105BB0036EB21 /* NSObjCRuntime.h */; };
 		024F2F6A1D2105BB0036EB21 /* NSObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F681D2105BB0036EB21 /* NSObject.h */; };
 		024F2F6C1D210A050036EB21 /* objc-msg-simulator-x86_64.s in Sources */ = {isa = PBXBuildFile; fileRef = 024F2F6B1D210A050036EB21 /* objc-msg-simulator-x86_64.s */; };
+		024F2F6E1D2122490036EB21 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 024F2F6D1D2122490036EB21 /* libstdc++.tbd */; };
+		024F2F701D21225D0036EB21 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 024F2F6F1D21225D0036EB21 /* libc++abi.tbd */; };
 		305B27561C7D9E96005AC125 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 305B27551C7D9E96005AC125 /* main.m */; };
 		307ED08F1C78839C000D10DC /* objc-accessors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 307ED08E1C78839C000D10DC /* objc-accessors.mm */; };
 		307ED0911C7883B3000D10DC /* objc-accessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 307ED0901C7883B3000D10DC /* objc-accessors.h */; };
@@ -193,6 +195,8 @@
 		024F2F671D2105BB0036EB21 /* NSObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjCRuntime.h; sourceTree = "<group>"; };
 		024F2F681D2105BB0036EB21 /* NSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObject.h; sourceTree = "<group>"; };
 		024F2F6B1D210A050036EB21 /* objc-msg-simulator-x86_64.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "objc-msg-simulator-x86_64.s"; sourceTree = "<group>"; };
+		024F2F6D1D2122490036EB21 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		024F2F6F1D21225D0036EB21 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		305B27531C7D9E96005AC125 /* debug-objc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "debug-objc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		305B27551C7D9E96005AC125 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		307ED08E1C78839C000D10DC /* objc-accessors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "objc-accessors.mm"; path = "runtime/objc-accessors.mm"; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				024F2F701D21225D0036EB21 /* libc++abi.tbd in Frameworks */,
+				024F2F6E1D2122490036EB21 /* libstdc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +369,8 @@
 		08FB7794FE84155DC02AAC07 /* objc */ = {
 			isa = PBXGroup;
 			children = (
+				024F2F6F1D21225D0036EB21 /* libc++abi.tbd */,
+				024F2F6D1D2122490036EB21 /* libstdc++.tbd */,
 				513A033F19B4B13000448729 /* include */,
 				838485C60D6D687700CEA253 /* Public Headers */,
 				838485C70D6D688200CEA253 /* Private Headers */,
