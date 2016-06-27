@@ -578,7 +578,7 @@ struct magic_t {
 // Set this to 1 to mprotect() autorelease pool contents
 #define PROTECT_AUTORELEASEPOOL 0
 
-class AutoreleasePoolPage 
+class AutoreleasePoolPage
 {
 
 #define POOL_SENTINEL nil
@@ -588,17 +588,17 @@ class AutoreleasePoolPage
 #if PROTECT_AUTORELEASEPOOL
         PAGE_MAX_SIZE;  // must be multiple of vm page size
 #else
-        PAGE_MAX_SIZE;  // size and alignment, power of 2
+        PAGE_MAX_SIZE;  // size and alignment, power of 2 . i386下是4K的大小
 #endif
     static size_t const COUNT = SIZE / sizeof(id);
 
-    magic_t const magic;
-    id *next;
-    pthread_t const thread;
-    AutoreleasePoolPage * const parent;
-    AutoreleasePoolPage *child;
-    uint32_t const depth;
-    uint32_t hiwat;
+    magic_t const magic;                    //用来校验 AutoreleasePoolPage 的结构是否完整
+    id *next;                               //指向最新添加的 autoreleased 对象的下一个位置，初始化时指向 begin() ；
+    pthread_t const thread;                 //指向当前线程；
+    AutoreleasePoolPage * const parent;     //指向父结点，第一个结点的 parent 值为 nil ；
+    AutoreleasePoolPage *child;             //指向子结点，最后一个结点的 child 值为 nil
+    uint32_t const depth;                   //代表深度，从 0 开始，往后递增 1；
+    uint32_t hiwat;                         //代表 high water mark
 
     // SIZE-sizeof(*this) bytes of contents follow
 
@@ -689,11 +689,13 @@ class AutoreleasePoolPage
         return (id *) ((uint8_t *)this+SIZE);
     }
 
+    //当前page为空
     bool empty() {
         return next == begin();
     }
 
-    bool full() { 
+    //当前page已满
+    bool full() {
         return next == end();
     }
 
@@ -840,10 +842,13 @@ class AutoreleasePoolPage
     {
         AutoreleasePoolPage *page = hotPage();
         if (page && !page->full()) {
+            //当前 page 存在且没有满时，直接将对象添加到当前 page 中，即 next 指向的位置
             return page->add(obj);
         } else if (page) {
+            //当前 page 存在且已满时，创建一个新的 page ，并将对象添加到新创建的 page 中；
             return autoreleaseFullPage(obj, page);
         } else {
+            //当前 page 不存在时，即还没有 page 时，创建第一个 page ，并将对象添加到新创建的 page 中。
             return autoreleaseNoPage(obj);
         }
     }
@@ -907,6 +912,8 @@ class AutoreleasePoolPage
     }
 
 public:
+    
+    //将需要autorelease的对象插入到pool中
     static inline id autorelease(id obj)
     {
         assert(obj);
@@ -916,7 +923,7 @@ public:
         return obj;
     }
 
-
+    //压栈pool
     static inline void *push() 
     {
         id *dest;
@@ -924,12 +931,14 @@ public:
             // Each autorelease pool starts on a new pool page.
             dest = autoreleaseNewPage(POOL_SENTINEL);
         } else {
+            //创建一个新的 autoreleasepool
             dest = autoreleaseFast(POOL_SENTINEL);
         }
         assert(*dest == POOL_SENTINEL);
         return dest;
     }
 
+    //弹出pool
     static inline void pop(void *token) 
     {
         AutoreleasePoolPage *page;
