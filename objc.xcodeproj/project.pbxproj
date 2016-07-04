@@ -369,8 +369,6 @@
 		08FB7794FE84155DC02AAC07 /* objc */ = {
 			isa = PBXGroup;
 			children = (
-				024F2F6F1D21225D0036EB21 /* libc++abi.tbd */,
-				024F2F6D1D2122490036EB21 /* libstdc++.tbd */,
 				513A033F19B4B13000448729 /* include */,
 				838485C60D6D687700CEA253 /* Public Headers */,
 				838485C70D6D688200CEA253 /* Private Headers */,
@@ -588,6 +586,8 @@
 		838485B20D6D67F900CEA253 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				024F2F6F1D21225D0036EB21 /* libc++abi.tbd */,
+				024F2F6D1D2122490036EB21 /* libstdc++.tbd */,
 				830F2AA50D7394C200392440 /* markgc.c */,
 				838485B40D6D683300CEA253 /* APPLE_LICENSE */,
 				838485B50D6D683300CEA253 /* ReleaseNotes.rtf */,
