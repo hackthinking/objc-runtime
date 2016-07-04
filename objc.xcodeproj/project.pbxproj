@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00396A861C81654B00667CB8 /* libobjc.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC0630554660B00DB518D /* libobjc.A.dylib */; };
-		024F2F691D2105BB0036EB21 /* NSObjCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F671D2105BB0036EB21 /* NSObjCRuntime.h */; };
-		024F2F6A1D2105BB0036EB21 /* NSObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F681D2105BB0036EB21 /* NSObject.h */; };
+		024F2F691D2105BB0036EB21 /* NSObjCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F671D2105BB0036EB21 /* NSObjCRuntime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		024F2F6A1D2105BB0036EB21 /* NSObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 024F2F681D2105BB0036EB21 /* NSObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		024F2F6C1D210A050036EB21 /* objc-msg-simulator-x86_64.s in Sources */ = {isa = PBXBuildFile; fileRef = 024F2F6B1D210A050036EB21 /* objc-msg-simulator-x86_64.s */; };
 		024F2F6E1D2122490036EB21 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 024F2F6D1D2122490036EB21 /* libstdc++.tbd */; };
 		024F2F701D21225D0036EB21 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 024F2F6F1D21225D0036EB21 /* libc++abi.tbd */; };
@@ -197,6 +197,7 @@
 		024F2F6B1D210A050036EB21 /* objc-msg-simulator-x86_64.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "objc-msg-simulator-x86_64.s"; sourceTree = "<group>"; };
 		024F2F6D1D2122490036EB21 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		024F2F6F1D21225D0036EB21 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
+		026D28EA1D2A61B0005E5C91 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		305B27531C7D9E96005AC125 /* debug-objc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "debug-objc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		305B27551C7D9E96005AC125 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		307ED08E1C78839C000D10DC /* objc-accessors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "objc-accessors.mm"; path = "runtime/objc-accessors.mm"; sourceTree = "<group>"; };
@@ -369,6 +370,7 @@
 		08FB7794FE84155DC02AAC07 /* objc */ = {
 			isa = PBXGroup;
 			children = (
+				026D28EA1D2A61B0005E5C91 /* TODO.md */,
 				513A033F19B4B13000448729 /* include */,
 				838485C60D6D687700CEA253 /* Public Headers */,
 				838485C70D6D688200CEA253 /* Private Headers */,
@@ -818,7 +820,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					305B27521C7D9E96005AC125 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1039,6 +1041,8 @@
 					"$(CONFIGURATION_BUILD_DIR)/usr/include/**",
 					"$(CONFIGURATION_BUILD_DIR)/usr/local/include/**",
 					"$(SRCROOT)/include",
+					"$(SRCROOT)/runtime/**",
+					"$(SRCROOT)",
 				);
 				INSTALL_PATH = /usr/lib;
 				MACH_O_TYPE = mh_dylib;
@@ -1081,6 +1085,8 @@
 					"$(CONFIGURATION_BUILD_DIR)/usr/include/**",
 					"$(CONFIGURATION_BUILD_DIR)/usr/local/include/**",
 					"$(SRCROOT)/include/**",
+					"$(SRCROOT)/runtime",
+					"$(SRCROOT)",
 				);
 				INSTALL_PATH = /usr/lib;
 				MACH_O_TYPE = mh_dylib;
@@ -1105,6 +1111,7 @@
 		1DEB914F08733D8E0010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LIBRARY = "libc++";
 				"CLANG_CXX_LIBRARY[sdk=iphoneos*]" = "libstdc++";
 				"CLANG_CXX_LIBRARY[sdk=iphonesimulator*]" = "libstdc++";
@@ -1156,6 +1163,7 @@
 		1DEB915008733D8E0010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LIBRARY = "libc++";
 				"CLANG_CXX_LIBRARY[sdk=iphoneos*]" = "libstdc++";
 				"CLANG_CXX_LIBRARY[sdk=iphonesimulator*]" = "libstdc++";
