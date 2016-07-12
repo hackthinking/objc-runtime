@@ -58,6 +58,7 @@
  * IMP的理解: IMP是指向实现函数的指针，通过SEL取得IMP后，我们就获得了最终要找的实现函数的入口.
  * 参考阅读：http://heeween.github.io/blog/2015-03-03-runtimepou-xi/
  **/
+//
 
 /// An opaque type that represents a method selector.
 /// SEL定义，不透明类型，标示一个方法的选择器
@@ -243,6 +244,10 @@ OBJC_EXPORT SEL sel_getUid(const char *str)
 typedef const void* objc_objectptr_t;
 
 // ARC定义
+//__bridge只做类型转换，但是不修改对象（内存）管理权；
+//__bridge_retained（也可以使用CFBridgingRetain）将Objective-C的对象转换为Core Foundation的对象，同时将对象（内存）的管理权交给我们，后续需要使用CFRelease或者相关方法来释放对象；
+//__bridge_transfer（也可以使用CFBridgingRelease）将Core Foundation的对象转换为Objective-C的对象，同时将对象（内存）的管理权交给ARC。
+
 #if __has_feature(objc_arc)
 #   define objc_retainedObject(o) ((__bridge_transfer id)(objc_objectptr_t)(o))
 #   define objc_unretainedObject(o) ((__bridge id)(objc_objectptr_t)(o))
