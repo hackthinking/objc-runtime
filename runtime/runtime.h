@@ -57,20 +57,22 @@ typedef struct objc_category *Category;
 /// 不透明类型，表示一个 OC 声明的属性
 typedef struct objc_property *objc_property_t;
 
+// class 结构定义
 struct objc_class {
     Class isa  OBJC_ISA_AVAILABILITY;
 
-#if !__OBJC2__
-    Class super_class                                        OBJC2_UNAVAILABLE; // 父类
-    const char *name                                         OBJC2_UNAVAILABLE; // 名称
-    long version                                             OBJC2_UNAVAILABLE; // 版本
-    long info                                                OBJC2_UNAVAILABLE; // 信息
-    long instance_size                                       OBJC2_UNAVAILABLE; // 实例大小
-    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE; // 对象变量列表
-    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE; // 对象方法列表
-    struct objc_cache *cache                                 OBJC2_UNAVAILABLE; // 对象缓存
-    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE; // 对象协议列表
-#endif
+    //非OC2.0下
+    #if !__OBJC2__
+        Class super_class                                        OBJC2_UNAVAILABLE; // 父类
+        const char *name                                         OBJC2_UNAVAILABLE; // 名称
+        long version                                             OBJC2_UNAVAILABLE; // 版本
+        long info                                                OBJC2_UNAVAILABLE; // 信息
+        long instance_size                                       OBJC2_UNAVAILABLE; // 实例大小
+        struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE; // 对象变量列表
+        struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE; // 对象方法列表
+        struct objc_cache *cache                                 OBJC2_UNAVAILABLE; // 对象缓存
+        struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE; // 对象协议列表
+    #endif
 
 } OBJC2_UNAVAILABLE;
 /* Use `Class` instead of `struct objc_class *` */
@@ -78,24 +80,25 @@ struct objc_class {
 
 #endif
 
+//定义protocol
 #ifdef __OBJC__
-@class Protocol;
+    @class Protocol;
 #else
-typedef struct objc_object Protocol;
+    typedef struct objc_object Protocol;
 #endif
 
 /// Defines a method
 /// 定义一个方法
 struct objc_method_description {
-    SEL name;               /**< The name of the method <br />方法名 */
-    char *types;            /**< The types of the method arguments <br />方法类型 */
+    SEL name;               /**< The name of the method             方法名 */
+    char *types;            /**< The types of the method arguments  方法参数类型 */
 };
 
 /// Defines a property attribute
 /// 定义一个 property 的属性
 typedef struct {
-    const char *name;           /**< The name of the attribute <br />属性名称 */
-    const char *value;          /**< The value of the attribute (usually empty) <br />属性值(通常为空) */
+    const char *name;           /**< The name of the attribute                  属性名称 */
+    const char *value;          /**< The value of the attribute (usually empty) 属性值(通常为空) */
 } objc_property_attribute_t;
 
 
@@ -107,15 +110,12 @@ typedef struct {
 
 /** 
  * Returns a copy of a given object.
- * <br />返回给定对象的副本
+ * 返回给定对象的副本
  *
- * @param obj An Objective-C object.
- *          <br />一个 OC 对象
- * @param size The size of the object \e obj.
- *          <br />\e obj 对象的大小
+ * @param obj An Objective-C object.        一个 OC 对象
+ * @param size The size of the object \e obj. 对象的大小
  *
- * @return A copy of \e obj.
- *          <br />\e obj 对象的副本
+ * @return A copy of \e obj.    对象的副本
  */
 OBJC_EXPORT id object_copy(id obj, size_t size)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
@@ -123,11 +123,10 @@ OBJC_EXPORT id object_copy(id obj, size_t size)
 
 /** 
  * Frees the memory occupied by a given object.
- * <br />释放给定对象的内存
+ * 释放给定对象的内存
  * @note 本函数只会释放对象的内存空间，释放后对象的指针地址不会变化
  *
- * @param obj An Objective-C object.
- *          <br />一个 OC 对象
+ * @param obj An Objective-C object.    一个 OC 对象
  *
  * @return nil
  */
@@ -137,29 +136,26 @@ OBJC_EXPORT id object_dispose(id obj)
 
 /** 
  * Returns the class of an object.
- * <br />返回对象的类
+ * 返回对象的类
  *
- * @param obj The object you want to inspect.
- *          <br />要检测的对象
+ * @param obj The object you want to inspect. 要检测的对象
  *
  * @return The class object of which \e object is an instance,
- *  or \c Nil if \e object is \c nil.
- *          <br />\e object 实例的 class 对象，如果 \e object 是 \c nil 则返回 \c Nil
+ *  or \c Nil if \e object is \c nil. 
+ * object 实例的 class 对象，如果 \e object 是 \c nil 则返回 \c Nil
  */
 OBJC_EXPORT Class object_getClass(id obj) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /**
  * Sets the class of an object.
- * <br />设置对象的类
+ * 设置对象的类
  *
- * @param obj The object to modify.
- *          <br />要修改的类
- * @param cls A class object.
- *          <br />一个 class 对象
+ * @param obj The object to modify.     要修改的类
+ * @param cls A class object.           一个 class 对象
  *
  * @return The previous value of \e object's class, or \c Nil if \e object is \c nil.
- *          <br />\e object 修改前的 class，如果 \e object 是 \c nil 则返回 \c Nil
+ * object 修改前的 class，如果 \e object 是 \c nil 则返回 \c Nil
  */
 OBJC_EXPORT Class object_setClass(id obj, Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
@@ -167,13 +163,12 @@ OBJC_EXPORT Class object_setClass(id obj, Class cls)
 
 /**
  * Returns whether an object is a class object.
- * <br />判断对象是否是一个 class 对象
+ * 判断对象是否是一个 class 对象
  *
  * @param obj An Objective-C object.
- *          <br />一个 OC 对象
  *
  * @return true if the object is a class or metaclass, false otherwise.
- *          <br />如果对象是一个 class 或者 mataclass 返回 true，否则返回 false
+ * 如果对象是一个 class 或者 mataclass 返回 true，否则返回 false
  */
 OBJC_EXPORT BOOL object_isClass(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_10, __IPHONE_8_0);
@@ -181,25 +176,26 @@ OBJC_EXPORT BOOL object_isClass(id obj)
 
 /** 
  * Returns the class name of a given object.
- * <br />返回给定对象的类名
+ * 返回给定对象的类名
  *
  * @param obj An Objective-C object.
- *          <br />一个 OC 对象
  *
  * @return The name of the class of which \e obj is an instance.
- *          <br />\e obj 实例对象的类名
+ * obj 实例对象的类名
  */
 OBJC_EXPORT const char *object_getClassName(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
  * Returns a pointer to any extra bytes allocated with an instance given object.
+ * 返回指向给定对象的extra bytes的指针
  * 
  * @param obj An Objective-C object.
  * 
  * @return A pointer to any extra bytes allocated with \e obj. If \e obj was
  *   not allocated with any extra bytes, then dereferencing the returned pointer is undefined.
- * 
+ * 返回指向给定对象的extra bytes的指针, 如果没有使用初始化extra bytes，则返回指针为undefined
+ *
  * @note This function returns a pointer to any extra bytes allocated with the instance
  *  (as specified by \c class_createInstance with extraBytes>0). This memory follows the
  *  object's ordinary ivars, but may not be adjacent to the last ivar.
@@ -207,6 +203,16 @@ OBJC_EXPORT const char *object_getClassName(id obj)
  *  the object's last ivar is less aligned than that. Alignment greater than pointer-size is never
  *  guaranteed, even if the area following the object's last ivar is more aligned than that.
  * @note In a garbage-collected environment, the memory is scanned conservatively.
+ *
+ * @note 这个方法返回实力对象分配的额外字节的指针（class_createInstance 参数中声明的 extraBytes>0)。
+ *  此内存跟随对象的普通实例变量，但可能与最后的变量不相邻。
+ * @note 返回指针被保证与指针大小（pointer-size）一致，即使最后变量小于指针大小（pointer-size）。
+ *  如果最后的变量大小超过指针大小（pointer-size），不保证Alignment 比指针大小（pointer-size）大
+ * @note 在垃圾回收的环境中，内存是保守扫描。（？？？）
+ *
+ * @note 注：这部分应该与初始化相关，OC2.0种allocWithZone的zone，应该就是extraBytes，系统默认的将这个参数置0.
+ *  可参见 _objc_rootAllocWithZone
+ *
  */
 OBJC_EXPORT void *object_getIndexedIvars(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
@@ -214,41 +220,48 @@ OBJC_EXPORT void *object_getIndexedIvars(id obj)
 
 /** 
  * Reads the value of an instance variable in an object.
+ * 读取实例变量值
+ *
+ * @param obj The object containing the instance variable whose value you want to read.     实例
+ * @param ivar The Ivar describing the instance variable whose value you want to read.      变量
  * 
- * @param obj The object containing the instance variable whose value you want to read.
- * @param ivar The Ivar describing the instance variable whose value you want to read.
- * 
- * @return The value of the instance variable specified by \e ivar, or \c nil if \e object is \c nil.
+ * @return The value of the instance variable specified by \e ivar, or \c nil if \e object is \c nil.   变量值，空返回nil
  * 
  * @note \c object_getIvar is faster than \c object_getInstanceVariable if the Ivar
  *  for the instance variable is already known.
+ * @note 如果实例变量已确定存在，\c object_getIvar 比 \c object_getInstanceVariable 快。（后者比前者多了个查验变量的步骤）
+ *
  */
 OBJC_EXPORT id object_getIvar(id obj, Ivar ivar) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
  * Sets the value of an instance variable in an object.
+ * 设置实例变量值
  * 
- * @param obj The object containing the instance variable whose value you want to set.
- * @param ivar The Ivar describing the instance variable whose value you want to set.
- * @param value The new value for the instance variable.
+ * @param obj The object containing the instance variable whose value you want to set.  实例
+ * @param ivar The Ivar describing the instance variable whose value you want to set.   变量
+ * @param value The new value for the instance variable.                                变量值
  * 
  * @note \c object_setIvar is faster than \c object_setInstanceVariable if the Ivar
  *  for the instance variable is already known.
+ * @note 如果实例变量已确定存在，\c object_setIvar 比 \c object_setInstanceVariable 快。（后者比前者多了个查验变量的步骤）
  */
 OBJC_EXPORT void object_setIvar(id obj, Ivar ivar, id value) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
  * Changes the value of an instance variable of a class instance.
+ * 设置实例变量值
  * 
  * @param obj A pointer to an instance of a class. Pass the object containing
- *  the instance variable whose value you wish to modify.
- * @param name A C string. Pass the name of the instance variable whose value you wish to modify.
- * @param value The new value for the instance variable.
+ *  the instance variable whose value you wish to modify.                                           实例指针
+ * @param name A C string. Pass the name of the instance variable whose value you wish to modify.   C String 变量名
+ * @param value The new value for the instance variable.                                            变量值
  * 
  * @return A pointer to the \c Ivar data structure that defines the type and 
  *  name of the instance variable specified by \e name.
+ * 返回 \c Ivar 数据结构的变量指针。
  */
 OBJC_EXPORT Ivar object_setInstanceVariable(id obj, const char *name, void *value)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
@@ -256,14 +269,16 @@ OBJC_EXPORT Ivar object_setInstanceVariable(id obj, const char *name, void *valu
 
 /** 
  * Obtains the value of an instance variable of a class instance.
- * 
+ * 获取实例变量值
+ *
  * @param obj A pointer to an instance of a class. Pass the object containing
- *  the instance variable whose value you wish to obtain.
- * @param name A C string. Pass the name of the instance variable whose value you wish to obtain.
- * @param outValue On return, contains a pointer to the value of the instance variable.
+ *  the instance variable whose value you wish to obtain.                                           实例指针
+ * @param name A C string. Pass the name of the instance variable whose value you wish to obtain.   C String 变量名
+ * @param outValue On return, contains a pointer to the value of the instance variable.             返回值指针
  * 
  * @return A pointer to the \c Ivar data structure that defines the type and name of
  *  the instance variable specified by \e name.
+ * 返回 \c Ivar 数据结构的变量指针。
  */
 OBJC_EXPORT Ivar object_getInstanceVariable(id obj, const char *name, void **outValue)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0)
@@ -275,42 +290,49 @@ OBJC_EXPORT Ivar object_getInstanceVariable(id obj, const char *name, void **out
 
 /**
  * Returns the class definition of a specified class.
- * <br />返回指定类的类定义
+ * 返回指定类的类定义
  *
- * @param name The name of the class to look up.
- *          <br />要查询的类名
+ * @param name The name of the class to look up.    要查询的类名
  *
  * @return The Class object for the named class, or \c nil
  *  if the class is not registered with the Objective-C runtime.
- *          <br />指定名称的 Class 对象，如果该类没有被 OC 运行时注册，返回 \c nil
+ * 指定名称的 Class 对象，如果该类没有被 OC 运行时注册，返回 \c nil
  *
  * @note \c objc_getClass is different from \c objc_lookUpClass in that if the class
  *  is not registered, \c objc_getClass calls the class handler callback and then checks
  *  a second time to see whether the class is registered. \c objc_lookUpClass does
  *  not call the class handler callback.
- *          <br />\c objc_getClass 与 \c objc_lookUpClass 函数的区别在于判断类是否注册
- *          \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
- *          \c objc_lookUpClass 函数不调用 class 的句柄回调方法
+ *  \c objc_getClass 与 \c objc_lookUpClass 函数的区别在于，类如果没有注册。
+ *  \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
+ *  \c objc_lookUpClass 函数不调用 class 的句柄回调方法
+ *
+ * @note 注：妈蛋，代码实现里，objc_getClass，objc_lookUpClass 最后的调用look_up_class参数根本就没用到。根本没区别好么！
  *
  * @warning Earlier implementations of this function (prior to OS X v10.0)
  *  terminate the program if the class does not exist.
- *          <br />在 OS X 10.0以前版本执行此函数，如果类不存在会终止程序
+ * 在 OS X 10.0以前版本执行此函数，如果类不存在会终止程序
  */
 OBJC_EXPORT Class objc_getClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
  * Returns the metaclass definition of a specified class.
+ * 获取类定义中的metaclass
  * 
- * @param name The name of the class to look up.
+ * @param name The name of the class to look up.    类名
  * 
  * @return The \c Class object for the metaclass of the named class, or \c nil if the class
  *  is not registered with the Objective-C runtime.
- * 
+ *  返回对应 \c Class 对象的 metaclass. 如果类没在runtime中注册，返回nil
+ *
  * @note If the definition for the named class is not registered, this function calls the class handler
  *  callback and then checks a second time to see if the class is registered. However, every class
  *  definition must have a valid metaclass definition, and so the metaclass definition is always returned,
  *  whether it’s valid or not.
+ * @note 如果命名的类没有注册，会先回调类的句柄，然后进行二次注册检查。
+ *  定义每个类，都必须有一个合法的metaclass定义，所以无论metaclass是否合法，定义总会有值返回。
+ * （原文这个地方有问题，类中的metaclass必须合法，metaclass定义不一定合法 ？？？）
+ *
  */
 OBJC_EXPORT Class objc_getMetaClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
@@ -1541,19 +1563,19 @@ OBJC_EXPORT id objc_storeWeak(id *location, id obj)
  */
 enum {
     OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object.
-                                            *   <br />指定一个弱引用到被关联的对象 */
+                                            *   指定一个弱引用到被关联的对象 */
     OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**< Specifies a strong reference to the associated object.
                                             *   The association is not made atomically.
-                                            *   <br />指定一个强引用到被关联的对象，该关联不是原子性的 */
+                                            *   指定一个强引用到被关联的对象，该关联不是原子性的 */
     OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**< Specifies that the associated object is copied.
                                             *   The association is not made atomically.
-                                            *   <br />指定被关联的对象是拷贝的，该关联不是原子性的 */
+                                            *   指定被关联的对象是拷贝的，该关联不是原子性的 */
     OBJC_ASSOCIATION_RETAIN = 01401,       /**< Specifies a strong reference to the associated object.
                                             *   The association is made atomically.
-                                            *   <br />指定一个强引用到被关联的对象，该关联是原子性的 */
+                                            *   指定一个强引用到被关联的对象，该关联是原子性的 */
     OBJC_ASSOCIATION_COPY = 01403          /**< Specifies that the associated object is copied.
                                             *   The association is made atomically.
-                                            *   <br />指定被关联的对象是拷贝的，该关联是原子性的 */
+                                            *   指定被关联的对象是拷贝的，该关联是原子性的 */
 };
 
 /// Type to specify the behavior of an association.
@@ -1562,16 +1584,16 @@ typedef uintptr_t objc_AssociationPolicy;
 
 /** 
  * Sets an associated value for a given object using a given key and association policy.
- * <br />使用给定的键及关联策略，为对象设置值
+ * 使用给定的键及关联策略，为对象设置值
  * 
  * @param object The source object for the association.
- *          <br />源对象
+ *          源对象
  * @param key The key for the association.
- *          <br />关联的键
+ *          关联的键
  * @param value The value to associate with the key key for object. Pass nil to clear an existing association.
- *          <br />要设置的值，传人 nil 将清除现有关联
+ *          要设置的值，传人 nil 将清除现有关联
  * @param policy The policy for the association. For possible values, see “Associative Object Behaviors.”
- *          <br />关联策略，请参阅"关联对象行为"
+ *          关联策略，请参阅"关联对象行为"
  * 
  * @see objc_setAssociatedObject
  * @see objc_removeAssociatedObjects
@@ -1581,15 +1603,15 @@ __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 /** 
  * Returns the value associated with a given object for a given key.
- * <br />返回对象给定键关联的值
+ * 返回对象给定键关联的值
  * 
  * @param object The source object for the association.
- *          <br />源对象
+ *          源对象
  * @param key The key for the association.
- *          <br />关联的键
+ *          关联的键
  * 
  * @return The value associated with the key \e key for \e object.
- *          <br />与 \e object 的 \e key 键关联的值
+ *          与 \e object 的 \e key 键关联的值
  * 
  * @see objc_setAssociatedObject
  */
@@ -1598,10 +1620,10 @@ __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
 /** 
  * Removes all associations for a given object.
- * <br />删除对象的所有关联
+ * 删除对象的所有关联
  * 
  * @param object An object that maintains associated objects.
- *          <br />维护关联对象的源对象
+ *          维护关联对象的源对象
  * 
  * @note The main purpose of this function is to make it easy to return an object
  *  to a "pristine state”. You should not use this function for general removal of
