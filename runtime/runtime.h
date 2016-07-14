@@ -427,59 +427,61 @@ OBJC_EXPORT Class *objc_copyClassList(unsigned int *outCount)
 /* Working with Classes */
 
 /** 
- * Returns the name of a class.
+ * Returns the name of a class. 返回类名
  * 
- * @param cls A class object.
+ * @param cls A class object.   类对象
  * 
- * @return The name of the class, or the empty string if \e cls is \c Nil.
+ * @return The name of the class, or the empty string if \e cls is \c Nil.  类名称，参数为Nil时，返回空字符串
  */
 OBJC_EXPORT const char *class_getName(Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a Boolean value that indicates whether a class object is a metaclass.
+ * Returns a Boolean value that indicates whether a class object is a metaclass.    判断类是否是metaclass
  * 
- * @param cls A class object.
+ * @param cls A class object.   类对象
  * 
- * @return \c YES if \e cls is a metaclass, \c NO if \e cls is a non-meta class, 
+ * @return \c YES if \e cls is a metaclass, \c NO if \e cls is a non-meta class,    是，返回YES，反之NO，空对象返回NO
  *  \c NO if \e cls is \c Nil.
  */
 OBJC_EXPORT BOOL class_isMetaClass(Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the superclass of a class.
+ * Returns the superclass of a class.   返回父类
+ *
+ * @param cls A class object.           类对象
  * 
- * @param cls A class object.
- * 
- * @return The superclass of the class, or \c Nil if
+ * @return The superclass of the class, or \c Nil if        返回父类，如果参数为根类（root class）或 Nil，返回 Nil
  *  \e cls is a root class, or \c Nil if \e cls is \c Nil.
  *
  * @note You should usually use \c NSObject's \c superclass method instead of this function.
+ * @note 尽量使用 \c NSObject's \c superclass 方法
  */
 OBJC_EXPORT Class class_getSuperclass(Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Sets the superclass of a given class.
+ * Sets the superclass of a given class.    设置新的父类
  * 
- * @param cls The class whose superclass you want to set.
- * @param newSuper The new superclass for cls.
+ * @param cls The class whose superclass you want to set.   类对象
+ * @param newSuper The new superclass for cls.              新的父类
  * 
- * @return The old superclass for cls.
+ * @return The old superclass for cls.      返回旧的父类
  * 
  * @warning You should not use this function.
+ * @warning 你不应该使用这个方法 (请看使用版本的宏定义)
  */
 OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper) 
      __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_5,__MAC_10_5, __IPHONE_2_0,__IPHONE_2_0);
 
 /** 
- * Returns the version number of a class definition.
+ * Returns the version number of a class definition.    返回类定义的版本号
  * 
- * @param cls A pointer to a \c Class data structure. Pass
+ * @param cls A pointer to a \c Class data structure. Pass                      类对象指针
  *  the class definition for which you wish to obtain the version.
  * 
- * @return An integer indicating the version number of the class definition.
+ * @return An integer indicating the version number of the class definition.    版本号，整数
  *
  * @see class_setVersion
  */
@@ -487,11 +489,11 @@ OBJC_EXPORT int class_getVersion(Class cls)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Sets the version number of a class definition.
+ * Sets the version number of a class definition.       设置类定义的的版本号
  * 
- * @param cls A pointer to an Class data structure. 
+ * @param cls A pointer to an Class data structure.                                 类对象指针
  *  Pass the class definition for which you wish to set the version.
- * @param version An integer. Pass the new version number of the class definition.
+ * @param version An integer. Pass the new version number of the class definition.  版本号，整数
  *
  * @note You can use the version number of the class definition to provide versioning of the
  *  interface that your class represents to other classes. This is especially useful for object
@@ -499,16 +501,19 @@ OBJC_EXPORT int class_getVersion(Class cls)
  *  recognize changes to the layout of the instance variables in different class-definition versions.
  * @note Classes derived from the Foundation framework \c NSObject class can set the class-definition
  *  version number using the \c setVersion: class method, which is implemented using the \c class_setVersion function.
+ *
+ * @note 设置类的版本号，在序列化对象的时候有用，可以用来识别。
+ * @note Classes 源于 Foundation framework \c ，NSObject 可以用 \c setVersion 设置类定义的版本号，底层调用 \c class_setVersion 实现
  */
 OBJC_EXPORT void class_setVersion(Class cls, int version)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns the size of instances of a class.
+ * Returns the size of instances of a class.    返回类实例大小
+ *
+ * @param cls A class object.                   类对象
  * 
- * @param cls A class object.
- * 
- * @return The size in bytes of instances of the class \e cls, or \c 0 if \e cls is \c Nil.
+ * @return The size in bytes of instances of the class \e cls, or \c 0 if \e cls is \c Nil. 返回类实例的bytes大小，对象为空返回0
  */
 OBJC_EXPORT size_t class_getInstanceSize(Class cls) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
@@ -861,9 +866,10 @@ OBJC_EXPORT Class objc_getFutureClass(const char *name)
 /** 
  * Creates an instance of a class, allocating memory for the class in the 
  * default malloc memory zone.
- * 
- * @param cls The class that you wish to allocate an instance of.
- * @param extraBytes An integer indicating the number of extra bytes to allocate. 
+ * 创建一个类实例，在默认的内存区域（memory zone）中初始化
+ *
+ * @param cls The class that you wish to allocate an instance of.                   要初始化的类
+ * @param extraBytes An integer indicating the number of extra bytes to allocate.   额外的bytes空间。额外的空间用来存储额外的类定义变量。
  *  The additional bytes can be used to store additional instance variables beyond 
  *  those defined in the class definition.
  * 
@@ -875,13 +881,14 @@ OBJC_EXPORT id class_createInstance(Class cls, size_t extraBytes)
 
 /** 
  * Creates an instance of a class at the specific location provided.
- * 
- * @param cls The class that you wish to allocate an instance of.
- * @param bytes The location at which to allocate an instance of \e cls.
+ * 在提供的特定位置创建一个类实例 （内存全部填充0， well-aligned zero-filled memory）
+ *
+ * @param cls The class that you wish to allocate an instance of.                   要初始化的类
+ * @param bytes The location at which to allocate an instance of \e cls.            实例大小，至少 \c class_getInstanceSize(cls) bytes of well-aligned, zero-filled memory.
  *  Must point to at least \c class_getInstanceSize(cls) bytes of well-aligned,
  *  zero-filled memory.
  *
- * @return \e bytes on success, \c nil otherwise. (For example, \e cls or \e bytes
+ * @return \e bytes on success, \c nil otherwise. (For example, \e cls or \e bytes  返回初始化的内存对象，或空
  *  might be \c nil)
  *
  * @see class_createInstance
@@ -891,14 +898,15 @@ OBJC_EXPORT id objc_constructInstance(Class cls, void *bytes)
     OBJC_ARC_UNAVAILABLE;
 
 /** 
- * Destroys an instance of a class without freeing memory and removes any
+ * Destroys an instance of a class without freeing memory and removes any           销毁一个实例，不会释放内存和移除实例引用
  * associated references this instance might have had.
  * 
- * @param obj The class instance to destroy.
+ * @param obj The class instance to destroy.        要销毁的实例
  * 
  * @return \e obj. Does nothing if \e obj is nil.
  * 
  * @warning GC does not call this. If you edit this, also edit finalize.
+ * @warning 垃圾回收不回调用，如果修改，同样需要修改finalize
  *
  * @note CF and other clients do call this under GC.
  */
