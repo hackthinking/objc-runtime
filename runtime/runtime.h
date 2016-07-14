@@ -302,15 +302,17 @@ OBJC_EXPORT Ivar object_getInstanceVariable(id obj, const char *name, void **out
  *  is not registered, \c objc_getClass calls the class handler callback and then checks
  *  a second time to see whether the class is registered. \c objc_lookUpClass does
  *  not call the class handler callback.
- *  \c objc_getClass 与 \c objc_lookUpClass 函数的区别在于，类如果没有注册。
- *  \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
- *  \c objc_lookUpClass 函数不调用 class 的句柄回调方法
- *
- * @note 注：妈蛋，代码实现里，objc_getClass，objc_lookUpClass 最后的调用look_up_class参数根本就没用到。根本没区别好么！
  *
  * @warning Earlier implementations of this function (prior to OS X v10.0)
  *  terminate the program if the class does not exist.
- * 在 OS X 10.0以前版本执行此函数，如果类不存在会终止程序
+ *
+ * @note  \c objc_getClass 与 \c objc_lookUpClass 函数的区别在于，类如果没有注册。
+ *  \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
+ *  \c objc_lookUpClass 函数不调用 class 的句柄回调方法
+ *
+ * @note 注：代码实现里，objc_getClass，objc_lookUpClass 最后的调用look_up_class参数根本就没用到。没区别！
+ *
+ * @warning 在 OS X 10.0以前版本执行此函数，如果类不存在会终止程序
  */
 OBJC_EXPORT Class objc_getClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
@@ -319,7 +321,7 @@ OBJC_EXPORT Class objc_getClass(const char *name)
  * Returns the metaclass definition of a specified class.
  * 获取类定义中的metaclass
  * 
- * @param name The name of the class to look up.    类名
+ * @param name The name of the class to look up.    要查询的类名
  * 
  * @return The \c Class object for the metaclass of the named class, or \c nil if the class
  *  is not registered with the Objective-C runtime.
@@ -339,61 +341,81 @@ OBJC_EXPORT Class objc_getMetaClass(const char *name)
 
 /** 
  * Returns the class definition of a specified class.
- * 
- * @param name The name of the class to look up.
+ * 返回指定类的类定义
+ *
+ * @param name The name of the class to look up.    要查询的类名
  * 
  * @return The Class object for the named class, or \c nil if the class
  *  is not registered with the Objective-C runtime.
- * 
+ * 指定名称的 Class 对象，如果该类没有被 OC 运行时注册，返回 \c nil
+ *
  * @note \c objc_getClass is different from this function in that if the class is not
  *  registered, \c objc_getClass calls the class handler callback and then checks a second
  *  time to see whether the class is registered. This function does not call the class handler callback.
+ *
+ *  \c objc_getClass 与 \c objc_lookUpClass 函数的区别在于，类如果没有注册。
+ *  \c objc_getClass 函数会调用 class 的句柄回调方法，然后再次检查该类是否已经注册
+ *  \c objc_lookUpClass 函数不调用 class 的句柄回调方法
+ *
  */
 OBJC_EXPORT Class objc_lookUpClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
  * Returns the class definition of a specified class.
+ * 返回指定类的类定义
+ *
+ * @param name The name of the class to look up.    要查询的类名
  * 
- * @param name The name of the class to look up.
- * 
- * @return The Class object for the named class.
+ * @return The Class object for the named class.    类对象
  * 
  * @note This function is the same as \c objc_getClass, but kills the process if the class is not found.
  * @note This function is used by ZeroLink, where failing to find a class would be a compile-time link error without ZeroLink.
+ *
+ * @note 此方法与 \c objc_getClass 一样，但是如果类不存在，会杀死进程
+ * @note ZeroLink使用此方法，不使ZeroLink时，查找类失败，会引起编译时链接错误(compile-time link error)
  */
 OBJC_EXPORT Class objc_getRequiredClass(const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
  * Obtains the list of registered class definitions.
+ * 获取已注册的类定义列表
  * 
  * @param buffer An array of \c Class values. On output, each \c Class value points to
  *  one class definition, up to either \e bufferCount or the total number of registered classes,
  *  whichever is less. You can pass \c NULL to obtain the total number of registered class
  *  definitions without actually retrieving any class definitions.
+ *  值为 \c Class 的数组。结果中，每个 \c Class 指针都指向类定义，数量取决于 \e bufferCount 或 注册的类总数 两者中少的一个。 
+ *  参数可以传 \c NULL 来获取总数和所有已注册的类定义列表
+ *
  * @param bufferCount An integer value. Pass the number of pointers for which you have allocated space
  *  in \e buffer. On return, this function fills in only this number of elements. If this number is less
  *  than the number of registered classes, this function returns an arbitrary subset of the registered classes.
- * 
- * @return An integer value indicating the total number of registered classes.
+ *  整数， 设置初始化的 \e buffer 指针数量。 方法返回指定数量的元素，如果 \c bufferCount 小于总注册数，方法讲返回任意分组的注册类
+ *
+ * @return An integer value indicating the total number of registered classes.  已注册的类总数
  * 
  * @note The Objective-C runtime library automatically registers all the classes defined in your source code.
  *  You can create class definitions at runtime and register them with the \c objc_addClass function.
- * 
+ * @note Objective-C runtime library 自动注册所有代码中定义的类。你可以在运行时使用 \c objc_addClass 进行添加创建。
+ *
  * @warning You cannot assume that class objects you get from this function are classes that inherit from \c NSObject,
  *  so you cannot safely call any methods on such classes without detecting that the method is implemented first.
+ * @warning 所有从这个方法中获得的类对象，你不能假定是继承自 \c NSObject, 在没有确定前，不要直接调用。
+ *
  */
 OBJC_EXPORT int objc_getClassList(Class *buffer, int bufferCount)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
  * Creates and returns a list of pointers to all registered class definitions.
- * 
+ * 获取已注册的类定义指针列表
+ *
  * @param outCount An integer pointer used to store the number of classes returned by
- *  this function in the list. It can be \c nil.
+ *  this function in the list. It can be \c nil.    返回列表中指针数量，不能为nil
  * 
- * @return A nil terminated array of classes. It must be freed with \c free().
+ * @return A nil terminated array of classes. It must be freed with \c free()   . nil元素结束的数组（最后一个元素是nil），必须用 \c free() 释放
  * 
  * @see objc_getClassList
  */
@@ -1555,27 +1577,26 @@ OBJC_EXPORT id objc_storeWeak(id *location, id obj)
 #pragma mark - 关联引用
 /* Associative References */
 
+// 允许开发者为任何对象附着键值数据，关联引用基于键的内存地址，而不是值的.
+// 参考：http://blog.csdn.net/chaoyuan899/article/details/46672155
+// 具体用法，见：https://github.com/forkingdog/FDFullscreenPopGesture/blob/master/FDFullscreenPopGesture/UINavigationController%2BFDFullscreenPopGesture.m
+
 /** 
- * Policies related to associative references.
- * 有关关联引用的策略
- * These are options to objc_setAssociatedObject()
- * 以下是 objc_setAssociatedObject() 函数可以设置的选项
+ * Policies related to associative references.      关联引用的策略
+ *
+ * These are options to objc_setAssociatedObject()  objc_setAssociatedObject() 函数选项
+ *
  */
 enum {
-    OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object.
-                                            *   指定一个弱引用到被关联的对象 */
+    OBJC_ASSOCIATION_ASSIGN = 0,           /**< Specifies a weak reference to the associated object.    指定一个弱引用到被关联的对象  */
     OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**< Specifies a strong reference to the associated object.
-                                            *   The association is not made atomically.
-                                            *   指定一个强引用到被关联的对象，该关联不是原子性的 */
+                                                The association is not made atomically.                 指定一个强引用到被关联的对象，该关联不是原子性的 */
     OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**< Specifies that the associated object is copied.
-                                            *   The association is not made atomically.
-                                            *   指定被关联的对象是拷贝的，该关联不是原子性的 */
+                                                The association is not made atomically.                 指定被关联的对象是拷贝的，该关联不是原子性的 */
     OBJC_ASSOCIATION_RETAIN = 01401,       /**< Specifies a strong reference to the associated object.
-                                            *   The association is made atomically.
-                                            *   指定一个强引用到被关联的对象，该关联是原子性的 */
+                                                The association is made atomically.                     指定一个强引用到被关联的对象，该关联是原子性的 */
     OBJC_ASSOCIATION_COPY = 01403          /**< Specifies that the associated object is copied.
-                                            *   The association is made atomically.
-                                            *   指定被关联的对象是拷贝的，该关联是原子性的 */
+                                                The association is made atomically.                     指定被关联的对象是拷贝的，该关联是原子性的 */
 };
 
 /// Type to specify the behavior of an association.
@@ -1586,14 +1607,10 @@ typedef uintptr_t objc_AssociationPolicy;
  * Sets an associated value for a given object using a given key and association policy.
  * 使用给定的键及关联策略，为对象设置值
  * 
- * @param object The source object for the association.
- *          源对象
- * @param key The key for the association.
- *          关联的键
- * @param value The value to associate with the key key for object. Pass nil to clear an existing association.
- *          要设置的值，传人 nil 将清除现有关联
- * @param policy The policy for the association. For possible values, see “Associative Object Behaviors.”
- *          关联策略，请参阅"关联对象行为"
+ * @param object The source object for the association.     源对象
+ * @param key The key for the association.                  关联的键
+ * @param value The value to associate with the key key for object. Pass nil to clear an existing association.      要设置的值，传入 nil 将清除现有关联
+ * @param policy The policy for the association. For possible values, see “Associative Object Behaviors.”           关联策略，请参阅"关联对象行为"
  * 
  * @see objc_setAssociatedObject
  * @see objc_removeAssociatedObjects
@@ -1605,13 +1622,11 @@ __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
  * Returns the value associated with a given object for a given key.
  * 返回对象给定键关联的值
  * 
- * @param object The source object for the association.
- *          源对象
- * @param key The key for the association.
- *          关联的键
+ * @param object The source object for the association.     源对象
+ * @param key The key for the association.                  关联的键
  * 
  * @return The value associated with the key \e key for \e object.
- *          与 \e object 的 \e key 键关联的值
+ *  与 \e object 的 \e key 键关联的值
  * 
  * @see objc_setAssociatedObject
  */
@@ -1622,8 +1637,7 @@ __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
  * Removes all associations for a given object.
  * 删除对象的所有关联
  * 
- * @param object An object that maintains associated objects.
- *          维护关联对象的源对象
+ * @param object An object that maintains associated objects.   维护关联对象的源对象
  * 
  * @note The main purpose of this function is to make it easy to return an object
  *  to a "pristine state”. You should not use this function for general removal of
@@ -1640,6 +1654,8 @@ __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 OBJC_EXPORT void objc_removeAssociatedObjects(id object)
     __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_1);
 
+
+//OC中的类型定义，对应C的字符串。用法参见 scan_basic_ivar_type
 
 #define _C_ID       '@'
 #define _C_CLASS    '#'
