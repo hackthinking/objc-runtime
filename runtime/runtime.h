@@ -920,7 +920,7 @@ OBJC_EXPORT void *objc_destructInstance(id obj)
 
 /** 
  * Creates a new class and metaclass.
- * 
+ *
  * @param superclass The class to use as the new class's superclass, or \c Nil to create a new root class.
  * @param name The string to use as the new class's name. The string will be copied.
  * @param extraBytes The number of bytes to allocate for indexed ivars at the end of 
@@ -1393,7 +1393,7 @@ OBJC_EXPORT void protocol_addProperty(Protocol *proto, const char *name, const o
 /* Working with Libraries */
 
 /** 
- * Returns the names of all the loaded Objective-C frameworks and dynamic
+ * Returns the names of all the loaded Objective-C frameworks and dynamic   返回所有加载的oc框架和动态库名称
  * libraries.
  * 
  * @param outCount The number of names returned.
@@ -1404,7 +1404,7 @@ OBJC_EXPORT const char **objc_copyImageNames(unsigned int *outCount)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the dynamic library name a class originated from.
+ * Returns the dynamic library name a class originated from.                返回指定类归属的动态库名称
  * 
  * @param cls The class you are inquiring about.
  * 
@@ -1414,7 +1414,7 @@ OBJC_EXPORT const char *class_getImageName(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the names of all the classes within a library.
+ * Returns the names of all the classes within a library.                   返回指定库中所有类的名字
  * 
  * @param image The library or framework you are inquiring about.
  * @param outCount The number of class names returned.
@@ -1430,7 +1430,7 @@ OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image,
 /* Working with Selectors */
 
 /** 
- * Returns the name of the method specified by a given selector.
+ * Returns the name of the method specified by a given selector.            返回指定方法选择器的方法名
  * 
  * @param sel A pointer of type \c SEL. Pass the selector whose name you wish to determine.
  * 
@@ -1440,7 +1440,7 @@ OBJC_EXPORT const char *sel_getName(SEL sel)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Registers a method name with the Objective-C runtime system.
+ * Registers a method name with the Objective-C runtime system.             在runtime system中注册一个方法
  * 
  * @param str A pointer to a C string. Pass the name of the method you wish to register.
  * 
@@ -1455,7 +1455,7 @@ OBJC_EXPORT SEL sel_getUid(const char *str)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Registers a method with the Objective-C runtime system, maps the method 
+ * Registers a method with the Objective-C runtime system, maps the method  在runtime system中注册一个方法, 并且对应方法选择器，返回方法选择器
  * name to a selector, and returns the selector value.
  * 
  * @param str A pointer to a C string. Pass the name of the method you wish to register.
@@ -1470,7 +1470,7 @@ OBJC_EXPORT SEL sel_registerName(const char *str)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns a Boolean value that indicates whether two selectors are equal.
+ * Returns a Boolean value that indicates whether two selectors are equal.  判断方法是否一致，返回bool结果
  * 
  * @param lhs The selector to compare with rhs.
  * @param rhs The selector to compare with lhs.
