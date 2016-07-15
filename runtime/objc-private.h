@@ -123,7 +123,7 @@ union isa_t
 
 };
 
-
+//类的实例的结构体
 struct objc_object {
 private:
     isa_t isa;

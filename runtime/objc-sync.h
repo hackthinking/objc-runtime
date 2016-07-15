@@ -27,23 +27,25 @@
 #include <objc/objc.h>
 
 
+// @synchronized的实现
+// 阅读参考：http://swifter.tips/lock/
 /** 
- * Begin synchronizing on 'obj'.  
- * Allocates recursive pthread_mutex associated with 'obj' if needed.
+ * Begin synchronizing on 'obj'.                                            开始同步"obj"
+ * Allocates recursive pthread_mutex associated with 'obj' if needed.       如果需要，调配递归对象相关的 pthread_mutex
  * 
- * @param obj The object to begin synchronizing on.
+ * @param obj The object to begin synchronizing on.                         需要加锁的对象
  * 
- * @return OBJC_SYNC_SUCCESS once lock is acquired.  
+ * @return OBJC_SYNC_SUCCESS once lock is acquired.                         加锁后返回 OBJC_SYNC_SUCCESS
  */
 OBJC_EXPORT  int objc_sync_enter(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
 
 /** 
- * End synchronizing on 'obj'. 
+ * End synchronizing on 'obj'.                                              结束同步"obj"
  * 
- * @param obj The objet to end synchronizing on.
+ * @param obj The objet to end synchronizing on.                            需要结束锁定的对象
  * 
- * @return OBJC_SYNC_SUCCESS or OBJC_SYNC_NOT_OWNING_THREAD_ERROR
+ * @return OBJC_SYNC_SUCCESS or OBJC_SYNC_NOT_OWNING_THREAD_ERROR           返回OBJC_SYNC_SUCCESS ，失败返回 OBJC_SYNC_NOT_OWNING_THREAD_ERROR
  */
 OBJC_EXPORT  int objc_sync_exit(id obj)
     __OSX_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0);
