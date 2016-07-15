@@ -7,52 +7,79 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "objc.h"
+#import "objc-runtime.h"
 
-@interface Subject : NSObject
-+(instancetype)getInstance;
+
+@interface classA : NSObject
+
+@property (nonatomic, strong) NSString *nameA;
+
+@end
+
+@implementation classA
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.nameA = @"AAAAAAA";
+    }
+    return self;
+}
+
+@end
+
+@interface classB : NSObject
+
+@property (nonatomic, strong) NSString *nameB;
+
+@end
+
+@implementation classB
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.nameB = @"BBBBBBB";
+    }
+    return self;
+}
+
+@end
+
+@interface classC : classA
+
+@end
+
+@implementation classC
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+//        NSLog(@"nameA %@", self.nameA);
+        self.nameA = @"CCCCCCC";
+//        NSLog(@"nameA %@", self.nameA);
+    }
+    return self;
+}
 
 @end
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        Subject *ia = [Subject getInstance];
         
-        // insert code here...
-        NSLog(@"Hello, World! %@", ia);
+        classA *a = [[classA alloc] init];
+        classB *b = [[classB alloc] init];
+        classC *c = [[classC alloc] init];
+        
+        NSLog(@"a %@", class_getSuperclass(object_getClass(a)) );
+        NSLog(@"b %@", class_getSuperclass([b class]) );
+        NSLog(@"c %@", class_getSuperclass([c class]) );
+        NSLog(@"version %d", class_getVersion(object_getClass(b)));
     }
     
     return 0;
 }
-
-
-@implementation Subject
-
-static Subject *sharedInstance = nil;
-
-+(instancetype)getInstance
-{
-    @synchronized(self)
-    {
-        // 实例对象只分配一次
-        if(sharedInstance == nil)
-        {
-            //            sharedInstance = [[super allocWithZone:NULL] init];
-            sharedInstance = [[Subject alloc] init];
-            
-            // 初始化
-        }
-    }
-    return sharedInstance;
-}
-
-//+ (id)allocWithZone:(NSZone *)zone
-//{
-//    return [self getInstance];
-//}
-//
-//- (id)copyWithZone:(NSZone *)zone
-//{
-//    return self;
-//}
-
-@end
