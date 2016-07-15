@@ -519,7 +519,7 @@ OBJC_EXPORT size_t class_getInstanceSize(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the \c Ivar for a specified instance variable of a given class.
+ * Returns the \c Ivar for a specified instance variable of a given class.      返回类中指定名称的变量
  * 
  * @param cls The class whose instance variable you wish to obtain.
  * @param name The name of the instance variable definition to obtain.
@@ -531,18 +531,19 @@ OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns the Ivar for a specified class variable of a given class.
+ * Returns the Ivar for a specified class variable of a given class.            返回类中指定名称的变量
  * 
  * @param cls The class definition whose class variable you wish to obtain.
  * @param name The name of the class variable definition to obtain.
  * 
- * @return A pointer to an \c Ivar data structure containing information about the class variable specified by \e name.
+ * @return A pointer to an \c Ivar data structure containing information about 
+ * the class variable specified by \e name.
  */
 OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Describes the instance variables declared by a class.
+ * Describes the instance variables declared by a class.                        类中声明的实例变量
  * 
  * @param cls The class to inspect.
  * @param outCount On return, contains the length of the returned array. 
@@ -558,7 +559,7 @@ OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a specified instance method for a given class.
+ * Returns a specified instance method for a given class.                       返回类中的方法
  * 
  * @param cls The class you want to inspect.
  * @param name The selector of the method you want to retrieve.
@@ -573,7 +574,7 @@ OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns a pointer to the data structure describing a given class method for a given class.
+ * Returns a pointer to the data structure describing a given class method for a given class.   返回类中的方法
  * 
  * @param cls A pointer to a class definition. Pass the class that contains the method you want to retrieve.
  * @param name A pointer of type \c SEL. Pass the selector of the method you want to retrieve.
@@ -589,7 +590,7 @@ OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns the function pointer that would be called if a 
+ * Returns the function pointer that would be called if a               返回类中，方法选择器的IMP指针
  * particular message were sent to an instance of a class.
  * 
  * @param cls The class you want to inspect.
@@ -607,7 +608,7 @@ OBJC_EXPORT IMP class_getMethodImplementation(Class cls, SEL name)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the function pointer that would be called if a particular 
+ * Returns the function pointer that would be called if a particular    返回类中，方法选择器的IMP指针
  * message were sent to an instance of a class.
  * 
  * @param cls The class you want to inspect.
@@ -621,7 +622,7 @@ OBJC_EXPORT IMP class_getMethodImplementation_stret(Class cls, SEL name)
      OBJC_ARM64_UNAVAILABLE;
 
 /** 
- * Returns a Boolean value that indicates whether instances of a class respond to a particular selector.
+ * Returns a Boolean value that indicates whether instances of a class respond to a particular selector.    判断类是否响应指定的方法选择器。
  * 
  * @param cls The class you want to inspect.
  * @param sel A selector.
@@ -635,7 +636,7 @@ OBJC_EXPORT BOOL class_respondsToSelector(Class cls, SEL sel)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Describes the instance methods implemented by a class.
+ * Describes the instance methods implemented by a class.   描述类方法
  * 
  * @param cls The class you want to inspect.
  * @param outCount On return, contains the length of the returned array. 
@@ -655,7 +656,7 @@ OBJC_EXPORT Method *class_copyMethodList(Class cls, unsigned int *outCount)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a Boolean value that indicates whether a class conforms to a given protocol.
+ * Returns a Boolean value that indicates whether a class conforms to a given protocol.     判断一个类是否遵循某个协议
  * 
  * @param cls The class you want to inspect.
  * @param protocol A protocol.
@@ -668,7 +669,7 @@ OBJC_EXPORT BOOL class_conformsToProtocol(Class cls, Protocol *protocol)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Describes the protocols adopted by a class.
+ * Describes the protocols adopted by a class.  描述类遵循的协议
  * 
  * @param cls The class you want to inspect.
  * @param outCount On return, contains the length of the returned array. 
@@ -684,7 +685,7 @@ OBJC_EXPORT Protocol * __unsafe_unretained *class_copyProtocolList(Class cls, un
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a property with a given name of a given class.
+ * Returns a property with a given name of a given class.   返回类中指定名称的属性
  * 
  * @param cls The class you want to inspect.
  * @param name The name of the property you want to inspect.
@@ -697,7 +698,7 @@ OBJC_EXPORT objc_property_t class_getProperty(Class cls, const char *name)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Describes the properties declared by a class.
+ * Describes the properties declared by a class.    返回类中的多个属性
  * 
  * @param cls The class you want to inspect.
  * @param outCount On return, contains the length of the returned array. 
@@ -713,7 +714,7 @@ OBJC_EXPORT objc_property_t *class_copyPropertyList(Class cls, unsigned int *out
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a description of the \c Ivar layout for a given class.
+ * Returns a description of the \c Ivar layout for a given class.   返回类中的ivarLayout（强引用），相关阅读：http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/
  * 
  * @param cls The class to inspect.
  * 
@@ -723,7 +724,7 @@ OBJC_EXPORT const uint8_t *class_getIvarLayout(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a description of the layout of weak Ivars for a given class.
+ * Returns a description of the layout of weak Ivars for a given class. 返回类中的weakIvarLayout，相关阅读：http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/
  * 
  * @param cls The class to inspect.
  * 
@@ -733,7 +734,7 @@ OBJC_EXPORT const uint8_t *class_getWeakIvarLayout(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Adds a new method to a class with a given name and implementation.
+ * Adds a new method to a class with a given name and implementation.   添加方法选择器到类，绑定名称和IMP
  * 
  * @param cls The class to which to add a method.
  * @param name A selector that specifies the name of the method being added.
@@ -752,7 +753,7 @@ OBJC_EXPORT BOOL class_addMethod(Class cls, SEL name, IMP imp,
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Replaces the implementation of a method for a given class.
+ * Replaces the implementation of a method for a given class.           替换类中方法选择器IMP
  * 
  * @param cls The class you want to modify.
  * @param name A selector that identifies the method whose implementation you want to replace.
@@ -774,7 +775,7 @@ OBJC_EXPORT IMP class_replaceMethod(Class cls, SEL name, IMP imp,
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Adds a new instance variable to a class.
+ * Adds a new instance variable to a class. 添加一个新的实例变量到类
  * 
  * @return YES if the instance variable was added successfully, otherwise NO 
  *         (for example, the class already contains an instance variable with that name).
@@ -791,7 +792,7 @@ OBJC_EXPORT BOOL class_addIvar(Class cls, const char *name, size_t size,
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Adds a protocol to a class.
+ * Adds a protocol to a class.  添加一个协议到类
  * 
  * @param cls The class to modify.
  * @param protocol The protocol to add to \e cls.
@@ -803,7 +804,7 @@ OBJC_EXPORT BOOL class_addProtocol(Class cls, Protocol *protocol)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Adds a property to a class.
+ * Adds a property to a class.  添加一个属性到类
  * 
  * @param cls The class to modify.
  * @param name The name of the property.
@@ -817,7 +818,7 @@ OBJC_EXPORT BOOL class_addProperty(Class cls, const char *name, const objc_prope
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Replace a property of a class. 
+ * Replace a property of a class.   替换类中的属性
  * 
  * @param cls The class to modify.
  * @param name The name of the property.
@@ -828,7 +829,7 @@ OBJC_EXPORT void class_replaceProperty(Class cls, const char *name, const objc_p
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Sets the Ivar layout for a given class.
+ * Sets the Ivar layout for a given class.  设置类中的Ivar layout（变量强引用），相关阅读：http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/
  * 
  * @param cls The class to modify.
  * @param layout The layout of the \c Ivars for \e cls.
@@ -837,7 +838,7 @@ OBJC_EXPORT void class_setIvarLayout(Class cls, const uint8_t *layout)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Sets the layout for weak Ivars for a given class.
+ * Sets the layout for weak Ivars for a given class.    设置类中的 weak Ivar layout（变量弱引用），相关阅读：http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/
  * 
  * @param cls The class to modify.
  * @param layout The layout of the weak Ivars for \e cls.
@@ -846,7 +847,7 @@ OBJC_EXPORT void class_setWeakIvarLayout(Class cls, const uint8_t *layout)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Used by CoreFoundation's toll-free bridging.
+ * Used by CoreFoundation's toll-free bridging.  CoreFoundation's 桥接使用，根据类名返回类实例id
  * Return the id of the named class.
  * 
  * @return The id of the named class, or an uninitialized class
@@ -919,7 +920,7 @@ OBJC_EXPORT void *objc_destructInstance(id obj)
 /* Adding Classes */
 
 /** 
- * Creates a new class and metaclass.
+ * Creates a new class and metaclass.   添加一个新的类和metaclass
  *
  * @param superclass The class to use as the new class's superclass, or \c Nil to create a new root class.
  * @param name The string to use as the new class's name. The string will be copied.
@@ -940,7 +941,7 @@ OBJC_EXPORT Class objc_allocateClassPair(Class superclass, const char *name,
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Registers a class that was allocated using \c objc_allocateClassPair.
+ * Registers a class that was allocated using \c objc_allocateClassPair.    注册一个用\c objc_allocateClassPair 初始化的类
  * 
  * @param cls The class you want to register.
  */
@@ -948,7 +949,7 @@ OBJC_EXPORT void objc_registerClassPair(Class cls)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Used by Foundation's Key-Value Observing.
+ * Used by Foundation's Key-Value Observing.        使用于Foundation 的key-value监听
  * 
  * @warning Do not call this function yourself.
  */
@@ -956,7 +957,7 @@ OBJC_EXPORT Class objc_duplicateClass(Class original, const char *name, size_t e
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Destroy a class and its associated metaclass. 
+ * Destroy a class and its associated metaclass.    销毁一个类对象和相关metaclass
  * 
  * @param cls The class to be destroyed. It must have been allocated with 
  *  \c objc_allocateClassPair
@@ -971,7 +972,7 @@ OBJC_EXPORT void objc_disposeClassPair(Class cls)
 /* Working with Methods */
 
 /** 
- * Returns the name of a method.
+ * Returns the name of a method.                        返回方法名称
  * 
  * @param m The method to inspect.
  * 
@@ -983,7 +984,7 @@ OBJC_EXPORT SEL method_getName(Method m)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the implementation of a method.
+ * Returns the implementation of a method.              返回方法的IMP指针
  * 
  * @param m The method to inspect.
  * 
@@ -993,7 +994,7 @@ OBJC_EXPORT IMP method_getImplementation(Method m)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a string describing a method's parameter and return types.
+ * Returns a string describing a method's parameter and return types.   返回描述方法的参数和返回类型，字符串
  * 
  * @param m The method to inspect.
  * 
@@ -1003,7 +1004,7 @@ OBJC_EXPORT const char *method_getTypeEncoding(Method m)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the number of arguments accepted by a method.
+ * Returns the number of arguments accepted by a method.                返回方法的参数数量
  * 
  * @param m A pointer to a \c Method data structure. Pass the method in question.
  * 
@@ -1013,7 +1014,7 @@ OBJC_EXPORT unsigned int method_getNumberOfArguments(Method m)
     __OSX_AVAILABLE_STARTING(__MAC_10_0, __IPHONE_2_0);
 
 /** 
- * Returns a string describing a method's return type.
+ * Returns a string describing a method's return type.                  返回描述方法返回类型，字符串
  * 
  * @param m The method to inspect.
  * 
@@ -1023,7 +1024,7 @@ OBJC_EXPORT char *method_copyReturnType(Method m)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a string describing a single parameter type of a method.
+ * Returns a string describing a single parameter type of a method.     返回某个指定描述方法参数描述，字符串
  * 
  * @param m The method to inspect.
  * @param index The index of the parameter to inspect.
@@ -1035,7 +1036,7 @@ OBJC_EXPORT char *method_copyArgumentType(Method m, unsigned int index)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns by reference a string describing a method's return type.
+ * Returns by reference a string describing a method's return type.                 获取函数的返回类型，结果赋值到引用字符串dst
  * 
  * @param m The method you want to inquire about. 
  * @param dst The reference string to store the description.
@@ -1048,7 +1049,7 @@ OBJC_EXPORT void method_getReturnType(Method m, char *dst, size_t dst_len)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns by reference a string describing a single parameter type of a method.
+ * Returns by reference a string describing a single parameter type of a method.    获取某个指定描述方法参数描述，结果赋值到引用字符串dst
  * 
  * @param m The method you want to inquire about. 
  * @param index The index of the parameter you want to inquire about.
@@ -1066,7 +1067,7 @@ OBJC_EXPORT struct objc_method_description *method_getDescription(Method m)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Sets the implementation of a method.
+ * Sets the implementation of a method.                 设置方法的IMP指针
  * 
  * @param m The method for which to set an implementation.
  * @param imp The implemention to set to this method.
@@ -1077,7 +1078,7 @@ OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Exchanges the implementations of two methods.
+ * Exchanges the implementations of two methods.        交换两个方法的IMP指针。（swizz）
  * 
  * @param m1 Method to exchange with second method.
  * @param m2 Method to exchange with first method.
@@ -1093,12 +1094,11 @@ OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp)
 OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2) 
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
-
 #pragma mark - 操作实例变量的函数
 /* Working with Instance Variables */
 
 /** 
- * Returns the name of an instance variable.
+ * Returns the name of an instance variable.            返回变量的名称
  * 
  * @param v The instance variable you want to enquire about.
  * 
@@ -1108,7 +1108,7 @@ OBJC_EXPORT const char *ivar_getName(Ivar v)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the type string of an instance variable.
+ * Returns the type string of an instance variable.     返回变量的类型，字符串（类型详见，Type Encodings）
  * 
  * @param v The instance variable you want to enquire about.
  * 
@@ -1120,7 +1120,7 @@ OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the offset of an instance variable.
+ * Returns the offset of an instance variable.          获取变量的基地址偏移字节，关于变量的阅读：http://www.jianshu.com/p/1e06bfee99d0/comments/2475893
  * 
  * @param v The instance variable you want to enquire about.
  * 
@@ -1137,7 +1137,7 @@ OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v)
 /* Working with Properties */
 
 /** 
- * Returns the name of a property.
+ * Returns the name of a property.              返回属性名称
  * 
  * @param property The property you want to inquire about.
  * 
@@ -1147,7 +1147,7 @@ OBJC_EXPORT const char *property_getName(objc_property_t property)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the attribute string of a property.
+ * Returns the attribute string of a property.  返回属性(property)的属性(attribute)
  * 
  * @param property A property.
  *
@@ -1159,7 +1159,7 @@ OBJC_EXPORT const char *property_getAttributes(objc_property_t property)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns an array of property attributes for a property. 
+ * Returns an array of property attributes for a property.              返回多个属性的属性
  * 
  * @param property The property whose attributes you want copied.
  * @param outCount The number of attributes returned in the array.
@@ -1170,7 +1170,7 @@ OBJC_EXPORT objc_property_attribute_t *property_copyAttributeList(objc_property_
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Returns the value of a property attribute given the attribute name.
+ * Returns the value of a property attribute given the attribute name.  根据属性和attributeName，返回attribute
  * 
  * @param property The property whose attribute value you are interested in.
  * @param attributeName C string representing the attribute name.
@@ -1186,7 +1186,7 @@ OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const ch
 /* Working with Protocols */
 
 /** 
- * Returns a specified protocol.
+ * Returns a specified protocol.        返回指定名称的协议
  * 
  * @param name The name of a protocol.
  * 
@@ -1198,7 +1198,7 @@ OBJC_EXPORT Protocol *objc_getProtocol(const char *name)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns an array of all the protocols known to the runtime.
+ * Returns an array of all the protocols known to the runtime.  返回runtime中所有已知协议
  * 
  * @param outCount Upon return, contains the number of protocols in the returned array.
  * 
@@ -1211,7 +1211,7 @@ OBJC_EXPORT Protocol * __unsafe_unretained *objc_copyProtocolList(unsigned int *
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a Boolean value that indicates whether one protocol conforms to another protocol.
+ * Returns a Boolean value that indicates whether one protocol conforms to another protocol. 判断一个协议是否遵从于另一个协议，Bool
  * 
  * @param proto A protocol.
  * @param other A protocol.
@@ -1229,7 +1229,7 @@ OBJC_EXPORT BOOL protocol_conformsToProtocol(Protocol *proto, Protocol *other)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a Boolean value that indicates whether two protocols are equal.
+ * Returns a Boolean value that indicates whether two protocols are equal.      判断两个协议是否一致，Bool
  * 
  * @param proto A protocol.
  * @param other A protocol.
@@ -1240,7 +1240,7 @@ OBJC_EXPORT BOOL protocol_isEqual(Protocol *proto, Protocol *other)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the name of a protocol.
+ * Returns the name of a protocol.  返回协议名称
  * 
  * @param p A protocol.
  * 
@@ -1250,7 +1250,7 @@ OBJC_EXPORT const char *protocol_getName(Protocol *p)
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns a method description structure for a specified method of a given protocol.
+ * Returns a method description structure for a specified method of a given protocol.   返回一个 objc_method_description 描述协议中的指定方法
  * 
  * @param p A protocol.
  * @param aSel A selector.
@@ -1268,7 +1268,7 @@ OBJC_EXPORT struct objc_method_description protocol_getMethodDescription(Protoco
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns an array of method descriptions of methods meeting a given specification for a given protocol.
+ * Returns an array of method descriptions of methods meeting a given specification for a given protocol.   返回一个 objc_method_description数组， 描述协议中的多个指定方法
  * 
  * @param p A protocol.
  * @param isRequiredMethod A Boolean value that indicates whether returned methods should
@@ -1288,7 +1288,7 @@ OBJC_EXPORT struct objc_method_description *protocol_copyMethodDescriptionList(P
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns the specified property of a given protocol.
+ * Returns the specified property of a given protocol.  获取协议中的属性
  * 
  * @param proto A protocol.
  * @param name The name of a property.
@@ -1302,7 +1302,7 @@ OBJC_EXPORT objc_property_t protocol_getProperty(Protocol *proto, const char *na
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns an array of the properties declared by a protocol.
+ * Returns an array of the properties declared by a protocol.   获取协议中指定个数的多个属性
  * 
  * @param proto A protocol.
  * @param outCount Upon return, contains the number of elements in the returned array.
@@ -1316,7 +1316,7 @@ OBJC_EXPORT objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Returns an array of the protocols adopted by a protocol.
+ * Returns an array of the protocols adopted by a protocol. 返回协议中采用的协议数组
  * 
  * @param proto A protocol.
  * @param outCount Upon return, contains the number of elements in the returned array.
@@ -1329,7 +1329,7 @@ OBJC_EXPORT Protocol * __unsafe_unretained *protocol_copyProtocolList(Protocol *
      __OSX_AVAILABLE_STARTING(__MAC_10_5, __IPHONE_2_0);
 
 /** 
- * Creates a new protocol instance that cannot be used until registered with
+ * Creates a new protocol instance that cannot be used until registered with    创建一个新协议实例，在 objc_registerProtocol() 注册前不能使用
  * \c objc_registerProtocol()
  * 
  * @param name The name of the protocol to create.
@@ -1342,7 +1342,7 @@ OBJC_EXPORT Protocol *objc_allocateProtocol(const char *name)
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Registers a newly constructed protocol with the runtime. The protocol
+ * Registers a newly constructed protocol with the runtime. The protocol        runtime中注册一个新构建的协议，注册后可直接使用
  * will be ready for use and is immutable after this.
  * 
  * @param proto The protocol you want to register.
@@ -1351,7 +1351,7 @@ OBJC_EXPORT void objc_registerProtocol(Protocol *proto)
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Adds a method to a protocol. The protocol must be under construction.
+ * Adds a method to a protocol. The protocol must be under construction.        给协议中添加方法，协议必须已经构建
  * 
  * @param proto The protocol to add a method to.
  * @param name The name of the method to add.
@@ -1363,7 +1363,7 @@ OBJC_EXPORT void protocol_addMethodDescription(Protocol *proto, SEL name, const 
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Adds an incorporated protocol to another protocol. The protocol being
+ * Adds an incorporated protocol to another protocol. The protocol being        合并两个协议，两个协议必须已构建
  * added to must still be under construction, while the additional protocol
  * must be already constructed.
  * 
@@ -1374,7 +1374,7 @@ OBJC_EXPORT void protocol_addProtocol(Protocol *proto, Protocol *addition)
      __OSX_AVAILABLE_STARTING(__MAC_10_7, __IPHONE_4_3);
 
 /** 
- * Adds a property to a protocol. The protocol must be under construction. 
+ * Adds a property to a protocol. The protocol must be under construction.      添加一个属性到协议中，协议必须已构建
  * 
  * @param proto The protocol to add a property to.
  * @param name The name of the property.
